@@ -1,7 +1,7 @@
 %% PRACTICA DE RADIACION GAMMA %%
 close all
 
-excel = 'gamma.xlsx';
+excel = 'files/excel/gamma.xlsx';
 rango1 = 'E7:E518';
 rango2 = 'F7:F518';
 rango3 = 'G7:G518';
@@ -99,24 +99,24 @@ xlabel('\fontsize{30} Canal');
 ylabel('\fontsize{30} Energía (keV)');
 
 %% CALIBRACION EN RESOLUCION %%
-load('co57gau.mat');
-load('co60gau1.mat');
-load('co60gau2.mat');
-load('cs137gau.mat');
-load('na22gau1.mat');
-load('na22gau2.mat');
-load('fondoco57');
-load('fondo1co60');
-load('fondo2co60');
-load('fondocs137');
-load('fondo1na22');
-load('fondo2na22');
-load('co57ef');
-load('co60ef1');
-load('co60ef2');
-load('cs137ef');
-load('na22ef1');
-load('na22ef2');
+load('files/matlab/co57gau.mat');
+load('files/matlab/co60gau1.mat');
+load('files/matlab/co60gau2.mat');
+load('files/matlab/cs137gau.mat');
+load('files/matlab/na22gau1.mat');
+load('files/matlab/na22gau2.mat');
+load('files/matlab/fondoco57');
+load('files/matlab/fondo1co60');
+load('files/matlab/fondo2co60');
+load('files/matlab/fondocs137');
+load('files/matlab/fondo1na22');
+load('files/matlab/fondo2na22');
+load('files/matlab/co57ef');
+load('files/matlab/co60ef1');
+load('files/matlab/co60ef2');
+load('files/matlab/cs137ef');
+load('files/matlab/na22ef1');
+load('files/matlab/na22ef2');
 agco57 = 240.2;
 bgco57 = 119.6;
 cgco57 = 12.27;
@@ -375,11 +375,11 @@ rhoxb = 3.4;
 rhoxc = 6.8;
 rhoxd = 10.77;
 
-load('csan');
-load('csbn');
-load('cscn');
-load('csdn');
-load('cssolon');
+load('files/matlab/csan');
+load('files/matlab/csbn');
+load('files/matlab/cscn');
+load('files/matlab/csdn');
+load('files/matlab/cssolon');
 
 sumacsa = sum(csan);
 sumacsb = sum(csbn);
@@ -434,8 +434,8 @@ xlabel('\fontsize{20} \rho·x (g/cm^{2})');
 % 
  %% Co57 %%
 % % Representacion %
-load('co57gau');
-load('eco57gau');
+load('files/matlab/co57gau');
+load('files/matlab/eco57gau');
 gauco57 = @(x) agco57*exp(-((x-bgco57)/cgco57).^2)+172;
 figure;
 plot (energia,co57,'r-','MarkerSize',16)
@@ -457,8 +457,8 @@ fprintf('\n \n El error de los picos del Fe57 es %f',errorco57)
 % % Representacion %
 %load('co60gau1');
 %load('co60gau2');
-load('eco60gau1');
-load('eco60gau2');
+load('files/matlab/eco60gau1');
+load('files/matlab/eco60gau2');
 gau1co60 = @(x) ag1co60*exp(-((x-bg1co60)/cg1co60).^2)+46;
 gau2co60 = @(x) ag2co60*exp(-((x-bg2co60)/cg2co60).^2)+25;
 figure;
@@ -479,7 +479,7 @@ fprintf('\n \n El error de los picos del Fe57 es %f',errorc1co60)
 %% Cs137 %%
 % % Representacion %
 %load('cs137gau');
-load('ecs137gau');
+load('files/matlab/ecs137gau');
 gaucs137 = @(x) agcs137*exp(-((x-bgcs137)/cgcs137).^2)+34;
 
 figure;
@@ -500,8 +500,8 @@ fprintf('\n \n El error de los picos del cs137 es %f',errorccs137)
 % % Representacion %
 %load('na22gau1');
 %load('na22gau2');
-load('ena22gau1');
-load('ena22gau2');
+load('files/matlab/ena22gau1');
+load('files/matlab/ena22gau2');
 
 gau1na22 = @(x) ag1na22*exp(-((x-bg1na22)/cg1na22).^2)+30;
 gau2na22 = @(x) ag2na22*exp(-((x-bg2na22)/cg2na22).^2)+7;
