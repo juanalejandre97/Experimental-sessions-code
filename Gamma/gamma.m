@@ -161,9 +161,6 @@ fwhmcuadradolin = p(1).*energia+p(2);
 errorfwhmcuadrado = @(x) x.*(sigma(1))+p(1)+sigma(2);
 erroresfwhmcuadradolin = errorfwhmcuadrado(e);
 
-%errorfwhmcuadradolin = @(x,y) x.*(((sigma(1)./x)+(y/p(1)))+(sigma(2)/p(2)));
-%error3 = errorfwhmcuadradolin(fwhmcuadrado,erroresenergia);
-
 % REPRESENTACION %
  figure;
 plot (e,fwhmcuadrado,'b.','MarkerSize',16)
@@ -238,34 +235,6 @@ sumacs137 = sum(cs137ef);
 suma1na22 = sum(na22ef1);
 suma2na22 = sum(na22ef2);
 
-% ncogau57 = (1/180).*co57gau;
- %nco60gau1 = (1/180).*co60gau1;
- %nco60gau2 = (1/180).*co60gau2;
-% ncs137gau = (1/180).*cs137gau;
-% nna22gau1 = (1/180).*na22gau1;
-% nna22gau2 = (1/180).*na22gau2;
- %nfondo = (1/180).*fondo;
-% nfondoco57 = (1/180).*fondoco57;
- %nfondo1co60 = (1/180).*fondo1co60;
- %nfondo2co60 = (1/180).*fondo2co60;
-% nfondocs137 = (1/180).*fondocs137;
-% nfondo1na22 = (1/180).*fondo1na22;
-% nfondo2na22 = (1/180).*fondo2na22;
-
-% sumaco57 = sum(ncogau57);
- %suma1co60 = sum(nco60gau1);
- %suma2co60 = sum(nco60gau2);
-% sumacs137 = sum(ncs137gau);
-% suma1na22 = sum(nna22gau1);
-% suma2na22 = sum(nna22gau2);
-% sumafondo = sum(nfondo);
-% sumafondoco57 = sum(nfondoco57);
- %sumafondo1co60 = sum(nfondo1co60);
- %sumafondo2co60 = sum(nfondo2co60);
-% sumafondocs137 = sum(nfondocs137);
-% sumafondo1na22 = sum(nfondo1na22);
-% sumafondo2na22 = sum(nfondo2na22);
-
 % Actividades inciales
 actinicial = 3.7E+4;
 t0 = (365*5+127)*24*60*60;
@@ -296,12 +265,6 @@ efico57 = (sumaco57)/(ico57*aco57);
  efi1na22 = (suma1na22)/(i1na22*ana22);
  efi2na22 = (suma2na22)/(i2na22*ana22);
 
-% efico57 = (sumaco57-sumafondoco57)/(ico57*aco57);
- %efi1co60 = (suma1co60-sumafondo1co60)/(i1co60*aco60);
- %efi2co60 = (suma2co60-sumafondo2co60)/(i2co60*aco60);
-% efics137 = (sumacs137-sumafondocs137)/(ics137*acs137);
-% efi1na22 = (suma1na22-sumafondo1na22)/(i1na22*ana22);
-% efi2na22 = (suma2na22-sumafondo2na22)/(i2na22*ana22);
 %% AJUSTE DE LA CALIBRACION EN EFICIENCIA Y REPRESENTACION %% 
 sumas = [sumaco57,suma1co60,suma2co60,sumacs137,suma1na22,suma2na22];
 eficiencias = [efi1co60,efi2co60,efics137,efico57,efi1na22,efi2na22];
