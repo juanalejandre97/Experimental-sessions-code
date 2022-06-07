@@ -77,13 +77,7 @@ fprintf('\n La ordenada en el origen es %f +- %f',p(2),sigma(2))
 energia = p(1).*canal+p(2);
 errorenergia = @(x) x.*(sigma(1))+p(1)+sigma(2)
 erroresenergia = errorenergia(canales);
- 
-%  energia = p(1).*canal+p(2);
-%  errorenergiavector = energia*(((sigma(1)/canal)+(1/p(1)))+(sigma(2)/p(2)));
-%   errorenergia = @(x) x.*(((sigma(1)./x)+(1/p(1)))+(sigma(2)/p(2)));
-%   
-%   erroresenergia = errorenergia(canales);
- 
+  
  % REPRESENTACION %
  figure;
 plot (canal,energia,'r-','MarkerSize',16)
