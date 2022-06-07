@@ -9,4 +9,5 @@ I have gathered here the code concerned with the resolutions of many tasks assoc
 - Experimental data measurement calculations
 - Data representation
 
+The most of the code is contained in the files .m (typical matlab scripts)
 I hope this material can be useful for some another students or interested data analyst involved with physics and data analysis.
