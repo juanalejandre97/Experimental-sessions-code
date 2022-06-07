@@ -1,6 +1,7 @@
 %% PRACTICA DE RADIACION GAMMA %%
 close all
 
+% We define the different ranges to extract colum arrays from excel
 excel = 'files/excel/gamma.xlsx';
 rango1 = 'E7:E518';
 rango2 = 'F7:F518';
@@ -58,7 +59,7 @@ canales = [canale1co60,canale2co60,canalecs137,canaleco57,canale1na22,canale2na2
 % Analisis de regresion lineal%
 m=1;   % grado del ajuste 
 [p,S] = polyfit(canales,e,m);   % p coeficientes del polinomio de ajuste (en este caso una recta)
-[yfit,~] = polyval(p,canales,S);
+[~,~] = polyval(p,canales,S);
 % Calculo de la desviacion standard de los coeficientes
 iR = inv(S.R);
 Cov = iR*iR';
@@ -75,7 +76,7 @@ fprintf('\n La ordenada en el origen es %f +- %f',p(2),sigma(2))
 
 % CONVERSION %
 energia = p(1).*canal+p(2);
-errorenergia = @(x) x.*(sigma(1))+p(1)+sigma(2)
+errorenergia = @(x) x.*(sigma(1))+p(1)+sigma(2);
 erroresenergia = errorenergia(canales);
   
  % REPRESENTACION %
@@ -141,7 +142,7 @@ sigma2na22 = cg2na22/sqrt(2);
  % Analisis de regresion lineal%
 m=1;   % grado del ajuste 
 [p,S] = polyfit(e,fwhmcuadrado,m);   % p coeficientes del polinomio de ajuste (en este caso una recta)
-[yfit,~] = polyval(p,e,S);
+[~,~] = polyval(p,e,S);
 % Calculo de la desviacion standard de los coeficientes
 iR = inv(S.R);
 Cov = iR*iR';
@@ -155,7 +156,6 @@ end
 fprintf('\n El coeficiente de correlacion para el ajuste es r^2 = %f',(r(2,1))^2)
 fprintf('\n La pendiente es %f +- %f',p(1),sigma(1))
 fprintf('\n La ordenada en el origen es %f +- %f',p(2),sigma(2))
-
 
 fwhmcuadradolin = p(1).*energia+p(2);
 errorfwhmcuadrado = @(x) x.*(sigma(1))+p(1)+sigma(2);
@@ -181,7 +181,7 @@ resolucion = resolu(e);
  % Analisis de regresion lineal%
 m=2;   % grado del ajuste 
 [p,S] = polyfit(e,resolucion,m);   % p coeficientes del polinomio de ajuste (en este caso una recta)
-[yfit,~] = polyval(p,e,S);
+[~,~] = polyval(p,e,S);
 % Calculo de la desviacion standard de los coeficientes
 iR = inv(S.R);
 Cov = iR*iR';
@@ -200,7 +200,6 @@ resolufinal = @(x) p(1).*x.^2+p(2).*x+p(3);
 s = linspace(0,1400,1400);
 errorresolufin = @(x)sigma(1)*x.^2+sigma(2)*x+sigma(3);
 errorresolufinal = errorresolufin(e);
-
 
 % REPRESENTACION %
  figure;
@@ -254,19 +253,18 @@ ico57 = 0.8568;
 i1co60 = 0.9989;
 i2co60 = 0.9998;
 ics137 = 0.847;
-%i1na22 = 1.8;
 i1na22 = 0.898;
 i2na22 = 0.9993;
 
 efico57 = (sumaco57)/(ico57*aco57);
- efi1co60 = (suma1co60)/(i1co60*aco60);
- efi2co60 = (suma2co60)/(i2co60*aco60);
- efics137 = (sumacs137)/(ics137*acs137);
- efi1na22 = (suma1na22)/(i1na22*ana22);
- efi2na22 = (suma2na22)/(i2na22*ana22);
+efi1co60 = (suma1co60)/(i1co60*aco60);
+efi2co60 = (suma2co60)/(i2co60*aco60);
+efics137 = (sumacs137)/(ics137*acs137);
+efi1na22 = (suma1na22)/(i1na22*ana22);
+efi2na22 = (suma2na22)/(i2na22*ana22);
 
 %% AJUSTE DE LA CALIBRACION EN EFICIENCIA Y REPRESENTACION %% 
-sumas = [sumaco57,suma1co60,suma2co60,sumacs137,suma1na22,suma2na22];
+%sumas = [sumaco57,suma1co60,suma2co60,sumacs137,suma1na22,suma2na22];
 eficiencias = [efi1co60,efi2co60,efics137,efico57,efi1na22,efi2na22];
 
 efilog = log(eficiencias);
@@ -275,7 +273,7 @@ elog = log(e);
 % Analisis de regresion cuadratica %
 m=2;   % grado del ajuste 
 [p,S] = polyfit(elog,efilog,m);   % p coeficientes del polinomio de ajuste (en este caso una recta)
-[yfit,~] = polyval(p,elog,S);
+[~,~] = polyval(p,elog,S);
 % Calculo de la desviacion standard de los coeficientes
 iR = inv(S.R);
 Cov = iR*iR';
@@ -287,7 +285,6 @@ for i=1:m+1
     fprintf('p(%d) = %5.3f +- %5.3f\n', i, p(i), sigma(i));
 end
 fprintf('\n El coeficiente de correlacion para el ajuste es r^2 = %f',(r(2,1))^2)
-
 
 a = -0.3907;
 b = 3.616;
@@ -303,16 +300,11 @@ fwhmcuadradolin = p(1).*energia+p(2);
 errorfwhmcuadrado = @(x) x.*(sigma(1))+p(1)+sigma(2);
 erroresfwhmcuadradolin = errorfwhmcuadrado(e);
 
-
 f = @(x)c+b*x+a*x.^2;
 s = linspace(4.5,7.5,1500);
 
 errorf = @(x)sigma(1)*x.^2+sigma(2)*x+sigma(3);
 errorap = errorf(efilog);
-% fmin = @(x)deltacmin+deltabmin*x+deltaamin*x.^2;
-% fmax = @(x)deltacmax+deltabmax*x+deltaamax*x.^2;
-% errormin = abs(f(elog)-fmin(elog));
-% errormax = abs(f(elog)-fmax(elog));
 
 figure
 plot(elog,efilog,'k.','MarkerSize',16)
@@ -370,8 +362,6 @@ fprintf('\n La ordenada en el origen es %f +- %f',p(2),sigma(2))
 error2 = @(x) sigma(1)*x+sigma(2);
 errorap2 = error2(y);
 
-
-
 % REPRESENTACION %
  figure;
 plot (x,y,'b.','MarkerSize',16)
@@ -386,9 +376,7 @@ ax.FontSize = 19;
 ylabel('\fontsize{20} ln(N/N_{0})');
 xlabel('\fontsize{20} \rho·x (g/cm^{2})');
 
-
- %% REPRESENTACIONES DE ESPECTROS %%
-% 
+ %% REPRESENTACIONES DE ESPECTROS % 
  %% Co57 %%
 % % Representacion %
 load('files/matlab/co57gau');
@@ -405,7 +393,7 @@ ax = gca;
 ax.FontSize = 16;
 xlabel('\fontsize{22} Energía (keV)');
 ylabel('\fontsize{20} Nº de cuentas');
-cco57 = [46];
+cco57 = 46;
 errorco57 = errorenergia(cco57);
 fprintf('\n \n El error de los picos del Fe57 es %f',errorco57)
 %set(gca,'yscale','log')
@@ -450,7 +438,7 @@ ax = gca;
 ax.FontSize = 18;
 xlabel('\fontsize{22} Energía (keV)');
 ylabel('\fontsize{20} Nº de cuentas');
-ccs137 = [230];
+ccs137 = 230;
 errorccs137 = errorenergia(ccs137);
 fprintf('\n \n El error de los picos del cs137 es %f',errorccs137)
  %% Na 22 %%
@@ -509,63 +497,6 @@ ax.FontSize = 18;
 xlabel('\fontsize{22} Energía (keV)');
 ylabel('\fontsize{20} Nº de cuentas');
 set(gca,'yscale','log')
-% 
- %% csa %%
-% % Representacion %
-% figure;
-% plot (energia,csa,'g-','MarkerSize',18)
-% title('\fontsize{20} \bf \color{blue} Cs(A)')
-% axis tight;
-% legend( '\fontsize{15} Cuentas',  'Location', 'Northeast')
-% ax = gca;
-% ax.FontSize = 18;
-% xlabel('\fontsize{22} Energía (keV)');
-% ylabel('\fontsize{20} Nº de cuentas');
-%  %% csb %%
-% % % Representacion %
-% figure;
-% plot (energia,csb,'r-','MarkerSize',18)
-% title('\fontsize{20} \bf \color{blue} Cs(B)')
-% axis tight;
-% legend( '\fontsize{15} Cuentas',  'Location', 'Northeast')
-% ax = gca;
-% ax.FontSize = 18;
-% xlabel('\fontsize{22} Energía (keV)');
-% ylabel('\fontsize{20} Nº de cuentas');
-%  %% csc %%
-% % % Representacion %
-% figure;
-% plot (energia,csc,'b-','MarkerSize',18)
-% title('\fontsize{20} \bf \color{blue} Cs(C)')
-% axis tight;
-% legend( '\fontsize{15} Cuentas',  'Location', 'Northeast')
-% ax = gca;
-% ax.FontSize = 18;
-% xlabel('\fontsize{22} Energía (keV)');
-% ylabel('\fontsize{20} Nº de cuentas');
-%  %% csd %%
-% % % Representacion %
-% figure;
-% plot (energia,csd,'k-','MarkerSize',18)
-% title('\fontsize{20} \bf \color{blue} Cs(D)')
-% axis tight;
-% legend( '\fontsize{15} Cuentas',  'Location', 'Northeast')
-% ax = gca;
-% ax.FontSize = 18;
-% xlabel('\fontsize{22} Energía (keV)');
-% ylabel('\fontsize{20} Nº de cuentas');
-%  %% cssolo %%
-% % % Representacion %
-% figure;
-% plot (energia,cssolo,'m-','MarkerSize',18)
-% title('\fontsize{20} \bf \color{blue} Cs (SOLO)')
-% axis tight;
-% legend( '\fontsize{15} Cuentas',  'Location', 'Northeast')
-% ax = gca;
-% ax.FontSize = 18;
-% xlabel('\fontsize{22} Energía (keV)');
-% ylabel('\fontsize{20} Nº de cuentas');
-
 %% Cs conjunta %%
 figure
 plot (energia,csa,'b-','MarkerSize',18)
